@@ -1,0 +1,2 @@
+userName,userPassword,eventId,eventName,description,fromDate,toDate,fromTime,toTime,calendarGroup,calType,eventCategory
+neji,neji123,Event5877ab337f00010107cb20d7571d889f,UpdateEvent,UpdatedDescription,04/27/2016,04/27/2016,18:00,19:25,neji-defaultCalendarId,0,defaultEventCategoryIdClients

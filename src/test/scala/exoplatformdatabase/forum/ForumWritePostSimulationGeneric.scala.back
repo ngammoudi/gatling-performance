@@ -1,0 +1,61 @@
+package exoplatformdatabase.forum
+
+import scala.concurrent.duration._
+import io.gatling.core.Predef._
+import io.gatling.http.Predef._
+import io.gatling.jdbc.Predef._
+import java.util.concurrent.ThreadLocalRandom
+class ForumWritePostSimulationGeneric extends Simulation {
+    def getRand(i: Int) : String = ThreadLocalRandom.current.nextInt(i).toString
+    
+	val httpProtocol = http
+		.baseURL("http://localhost:8080")
+       val forumDataset = csv("forum.csv")
+
+
+  object Login {
+         val login = scenario("login")
+        .feed(forumDataset)
+.exec(http("Login")
+        
+				.post("/portal/login")
+				.formParam("initialURI", "/portal/intranet/")
+				.formParam("username", "${userName}")
+				.formParam("password", "${userPassword}")
+				.formParam("rememberme", "true")
+		        	.check(status.is(200))
+		        	)
+
+						.exec(session => session.set("random", getRand(10000000))
+							)
+
+						.pause(2)
+  }
+object GoToTopic
+{
+	val goToTopic=exec(http("Goto TopicId")
+				.get("/portal/intranet/${forumTopicUrl}/${forumTopicId}")
+				.check(regex("""form class="UIForm" id="UITopicDetail" .*portal:componentId=([^&]*)(&amp;|&)interactionstate=([^&]+)(&amp;|&).*""").saveAs("quickreply_componentId"))
+				.check(regex("""form class="UIForm" id="UITopicDetail" .*/portal/intranet/forum/topic.*interactionstate=([^&]+)(&amp;|&).*gtn:csrf" value="([0-9A-Z]+)""").saveAs("quickreply_interactionstate"))
+				.check(regex("""gtn:csrf.*value="([^"]*)"""").saveAs("gtncsrf"))
+				.check(regex("""/exo:applications.*topic[0-9a-z]+""").saveAs("objectId")))
+.pause(2)
+}
+
+object QuickReply {
+	val quickReply= scenario("quickReply")
+
+	.exec(http("Quick reply in TopicId")
+				.post("/portal/intranet/${forumTopicUrl}/${forumTopicId}?portal:componentId=${quickreply_componentId}&interactionstate=${quickreply_interactionstate}&portal:type=action&objectId=${objectId}&ajaxRequest=true")
+				.formParam("formOp", "QuickReply")
+				.formParam("gtn:csrf", "${gtncsrf}")
+				.formParam("AddTag", "")
+				.formParam("SearchForm", "")
+				.formParam("UITopicDetail.label.Message", "${userName} reply to ${forumTopicUrl}/${forumTopicId}.${random}"))
+.pause(2)
+       				.feed(forumDataset)
+}
+val users = scenario("ForumWritePostSimulationGeneric").exec(Login.login, GoToTopic.goToTopic,QuickReply.quickReply)
+
+	setUp(users.inject(atOnceUsers(3))).protocols(httpProtocol)
+}

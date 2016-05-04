@@ -1,0 +1,2 @@
+userName,userPassword,eventId,eventName,description,fromDate,toDate,fromTime,toTime,calendarGroup,calType,eventCategory,priority,status
+nejis,neji123,Event587130307f00010178684fbb61dec991,UpdateTask,UpdatedTaskDescription,04/27/2016,04/27/2016,18:00,19:25,neji-defaultCalendarId,0,defaultEventCategoryIdClients,high,in-process
