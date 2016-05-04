@@ -30,23 +30,19 @@ val headers_1 = Map(
 		        .check(status.is(200)))
                 .exec(session => session.set("getRand", getRand(10000000)))
 
-                .exec(http("Go To Documents Folder")
-				.get("/portal/intranet/documents")
-				)
+            .exec(http("Go To Documents Folder")
+				.get("/portal/intranet/documents"))
 				
-.repeat(5)
-		{
-			exec(http("Upload file")
-				.post("http://localhost:8080/portal/rest/wcmDriver/uploadFile/upload?uploadId=${getRand}")
-				.headers(headers_1)
-				.bodyPart(RawFileBodyPart("${fileName}", "${filePath}/${fileName}"))
-		        )
+			.repeat(5)
+				{
+					exec(http("Upload file")
+						.post("http://localhost:8080/portal/rest/wcmDriver/uploadFile/upload?uploadId=${getRand}")
+						.headers(headers_1)
+						.bodyPart(RawFileBodyPart("${fileName}", "${filePath}/${fileName}")))
 
-		        .exec(http("Save Document After Upload ")			
-
-				.get("/portal/rest/wcmDriver/uploadFile/control?repositoryName=repository&workspaceName=collaboration&driverName=Personal%20Documents&currentFolder=/Documents&currentPortal=intranet&userId=${userName}&uploadId=${getRand}&fileName=${fileName}&language=en&existenceAction=keep&action=save")
-				)
-}
+		        	.exec(http("Save Document After Upload ")
+		        		.get("/portal/rest/wcmDriver/uploadFile/control?repositoryName=repository&workspaceName=collaboration&driverName=Personal%20Documents&currentFolder=/Documents&currentPortal=intranet&userId=${userName}&uploadId=${getRand}&fileName=${fileName}&language=en&existenceAction=keep&action=save"))
+				}
 			
 
 .exec(session => {
