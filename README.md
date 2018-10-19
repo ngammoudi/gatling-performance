@@ -35,7 +35,7 @@ Gatling plugin usage
 This is an example of a genrated report for UploadDocumentSimulation with 5VU 
 *****
 
-![UploadDocumentSimulation](https://github.com/exoplatform/qa-gatling-performance/blob/master/docs/images/GatlingReport.png)
+![UploadDocumentSimulation](https://github.com/ngammoudi/gatling-performance/blob/master/docs/images/GatlingReport.png)
 
 Gatling Realtime monitoring
 ===============
