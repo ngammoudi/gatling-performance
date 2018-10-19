@@ -124,9 +124,4 @@ Below a screenshot for CPU, memory behavior and UploadDocumentSimulation metrics
 ![UploadDocumentSimulation Live Response Time Metrics](https://github.com/ngammoudi/gatling-performance/blob/master/docs/images/UploadDocument_Metrics.png)
 
 
-**CPU & Memory Live Time Monitoring**
-*****
-
-![ CPU & Memory Live Time Monitoring](https://github.com/ngammoudi/gatling-performance/blob/master/docs/images/Collectd_CPU.png)
-
 
