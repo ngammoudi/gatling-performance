@@ -20,7 +20,7 @@ Gatling plugin usage
  - Configure the [Content Security Policy] (https://wiki.jenkins-ci.org/display/JENKINS/Configuring+Content+Security+Policy).
  - Start building the project will execute the default simulation UploadDocumentSimulation.
  - A the end of the test a graph displaying the mean response time will appear.
- ![Mean Response Time](https://github.com/exoplatform/qa-gatling-performance/blob/master/docs/images/gatlingMRT.png)
+ ![Mean Response Time](https://github.com/ngammoudi/gatling-performance/blob/master/docs/images/gatlingMRT.png)
  - If you are on the project dashboard, clicking on Gatling will get you to a more detailed performance trend, displaying for your last 30 builds :
 
   * Mean response time trend.
